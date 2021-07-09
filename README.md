@@ -1,4 +1,6 @@
 # ws-client-delphi
+Web servis methodları ile ilgili detaylı bilgi için [İZİBİZ E-Dönüşüm Entegrasyon Kılavuzu](https://dev.izibiz.com.tr/)nu inceleyiniz.
+
 Delphi Client Örnek projesi
 - Kimlik Doğrulama Webservisi (IzibizAuth.pas)
   - Login
