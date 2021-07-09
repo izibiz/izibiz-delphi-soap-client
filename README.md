@@ -1,2 +1,28 @@
 # ws-client-delphi
 Delphi Client Örnek projesi
+- Kimlik Doğrulama Webservisi
+  - Login
+  - Logout
+  - GetGibUserList
+  - CheckUser
+- E-Fatura Webservisi
+  - SendInvoice
+    - Seri No Servisten Atayarak Gönderim
+    - Seri No atanmış Gönderim
+    - Taslaktaki Belgeyi Content Vermeden Gönderim
+  - LoadInvoice
+  - GetInvoice
+  - MarkInvoice
+  - GetInvoiceStatus
+  - GetInvoiceStatusAll
+  - _GetInvoiceWithType(eklenecek)_
+  - _SendInvoiceResponseWithServerSign(eklenecek)_
+- E-Arşiv Fatura Webservisi
+  - WriteToArchieveExtended(taslak yükleme)
+  - WriteToArchieveExtended(gönderme)
+  - ReadFromArchive
+  - GetEArchiveStatus
+  - CancelEArchiveInvoice
+  - _GetEmailEarchiveInvoice(eklenecek)_
+  - _GetEArchiveReport(eklenecek)_
+  - _ReadEArchiveReport(eklenecek)_
