@@ -1,11 +1,11 @@
 # ws-client-delphi
 Delphi Client Örnek projesi
-- Kimlik Doğrulama Webservisi
+- Kimlik Doğrulama Webservisi (IzibizAuth.pas)
   - Login
   - Logout
   - GetGibUserList
   - CheckUser
-- E-Fatura Webservisi
+- E-Fatura Webservisi (IzibizEinvoice.pas)
   - SendInvoice
     - Seri No Servisten Atayarak Gönderim
     - Seri No atanmış Gönderim
@@ -17,7 +17,7 @@ Delphi Client Örnek projesi
   - GetInvoiceStatusAll
   - _GetInvoiceWithType(eklenecek)_
   - _SendInvoiceResponseWithServerSign(eklenecek)_
-- E-Arşiv Fatura Webservisi
+- E-Arşiv Fatura Webservisi (IzibizEarchiveInvoice.pas)
   - WriteToArchieveExtended(taslak yükleme)
   - WriteToArchieveExtended(gönderme)
   - ReadFromArchive
