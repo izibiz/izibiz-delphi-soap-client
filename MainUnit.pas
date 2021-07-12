@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,IzibizDataControl,LoginUnit,efaturaIndirunit,ShellAPI,EFaturaArchive,
    Vcl.Menus,MukellefListesiCekUnit,CheckUserUnit,EfaturaSendUnit,efaturaDurumSorgulamaUnit,System.IOUtils,
-  Vcl.ExtCtrls,EarchiveCancelInvoiceUnit,earchivesendunit,EarchiceDurumSorgulaUnit,earsivindirunit;
+  Vcl.ExtCtrls,EfaturaYanitVerUnit,EarchiveCancelInvoiceUnit,earchivesendunit,EarchiceDurumSorgulaUnit,earsivindirunit;
 
 type
   TMainForm = class(TForm)
@@ -41,6 +41,7 @@ type
     MenuAthGetGibUserList: TMenuItem;
     Hakknda1: TMenuItem;
     menuDetail: TMenuItem;
+    menuYanitVer: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure MenuAthGetGibUserListClick(Sender: TObject);
     procedure menuAuthCheckUserClick(Sender: TObject);
@@ -55,6 +56,7 @@ type
     procedure menuEarsivGonderClick(Sender: TObject);
     procedure menuEarsivDurumSorgulaClick(Sender: TObject);
     procedure menuEarsivIndirClick(Sender: TObject);
+    procedure menuYanitVerClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -175,11 +177,18 @@ begin
   xmlPath := 'efatura/taslak/'+fileName+'.xml';
   TFile.WriteAllText(xmlPath,xmlData,TEncoding.UTF8);
   IzibizDataModule.einvoiceWs.loadInvoice(IzibizDataModule.getSessionId,xmlPath);
+  ShowMessage('belge '+fileName+' id ile yüklendi');
 end;
 
 procedure TMainForm.menuLogoutClick(Sender: TObject);
 begin
   IzibizDataModule.authWs.logout;
+end;
+
+procedure TMainForm.menuYanitVerClick(Sender: TObject);
+begin
+  Application.CreateForm(TEfaturaYanitVerForm,EfaturaYanitVerForm);
+  EfaturaYanitVerForm.ShowModal;
 end;
 
 end.

@@ -27,6 +27,7 @@ uses
     function getInvoiceStatusAll(sessionId:string;uuidList:array of string):GetInvoiceStatusAllResponse;
     function getInvoice(sessionId:string;startDate,endDate:TDate):GetInvoiceResponse;
     function markInvoice(sessionId:string;invoices:Array_Of_INVOICE):MarkInvoiceResponse;
+    function SendInvoiceResponseWithServerSign(sessionId,status:string;invoices:Array_Of_INVOICE;description:Array_Of_string):SendInvoiceResponseWithServerSignResponse;
   end;
 
 implementation
@@ -266,5 +267,22 @@ begin
    if resp.ERROR_TYPE<>nil then
     raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
   result := resp;
+end;
+
+function IzizibEinvoiceClient.SendInvoiceResponseWithServerSign(sessionId,status:string;invoices:Array_Of_INVOICE;description:Array_Of_string):SendInvoiceResponseWithServerSignResponse;
+var
+req : SendInvoiceResponseWithServerSignRequest;
+resp : SendInvoiceResponseWithServerSignResponse;
+begin
+  req := SendInvoiceResponseWithServerSignRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  req.INVOICE := invoices;
+  req.DESCRIPTION := description;
+  req.STATUS := status;
+  resp := eiWs.SendInvoiceResponseWithServerSign(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+    result := resp;
 end;
 end.

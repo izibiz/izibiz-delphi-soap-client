@@ -54,6 +54,10 @@ object MainForm: TMainForm
         Caption = #304'ndir'
         OnClick = menuEfaturaIndirClick
       end
+      object menuYanitVer: TMenuItem
+        Caption = 'Yan'#305't Ver'
+        OnClick = menuYanitVerClick
+      end
     end
     object eaRV1: TMenuItem
       Caption = 'E-Ar'#351'iv'
