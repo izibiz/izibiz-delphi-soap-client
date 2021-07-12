@@ -17,7 +17,7 @@ Delphi Client Örnek projesi
   - MarkInvoice
   - GetInvoiceStatus
   - GetInvoiceStatusAll
-  - GetInvoiceWithType(eklenecek)
+  - GetInvoiceWithType
   - SendInvoiceResponseWithServerSign
 - E-Arşiv Fatura Webservisi (IzibizEarchiveInvoice.pas)
   - WriteToArchieveExtended(taslak yükleme)
