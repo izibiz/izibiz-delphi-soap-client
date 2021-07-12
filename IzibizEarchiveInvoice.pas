@@ -25,6 +25,7 @@ uses
     function getInvoiceStatus(sessionId:string;uuid:Array_Of_string):GetEArchiveInvoiceStatusResponse;
     function getInvoice(sessionId,uuid:string):ArchiveInvoiceReadResponse;
     function cancelInvoice(sessionId,uuid,id,deleteFlag:string):CancelEArchiveInvoiceResponse;
+    function GetEmailEarchiveInvoice(sessionId,uuid,email:string):GetEmailEarchiveInvoiceResponse;
   end;
 
 implementation
@@ -213,5 +214,21 @@ begin
   if resp.ERROR_TYPE<>nil then
     raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
   result := resp;
+end;
+
+function IzizibEarchiveEinvoiceClient.GetEmailEarchiveInvoice(sessionId,uuid,email:string):GetEmailEarchiveInvoiceResponse;
+var
+req : GetEmailEarchiveInvoiceRequest;
+resp : GetEmailEarchiveInvoiceResponse;
+begin
+  req := GetEmailEarchiveInvoiceRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  req.FATURA_UUID := uuid;
+  req.EMAIL := email;
+  resp := eaWs.GetEmailEarchiveInvoice(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+    result := resp;
 end;
 end.

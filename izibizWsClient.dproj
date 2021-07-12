@@ -161,6 +161,10 @@
             <Form>EarsivIndirForm</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="EarsivMailGonderUnit.pas">
+            <Form>EarchiveSendEmailForm</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <RcItem Include="logo.png">
             <ResourceType>RCDATA</ResourceType>
             <ResourceId>PngImage_1</ResourceId>

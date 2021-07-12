@@ -24,7 +24,8 @@ uses
   EarchiveCancelInvoiceUnit in 'EarchiveCancelInvoiceUnit.pas' {EarchiveCancelInvoice},
   EarchiveSendUnit in 'EarchiveSendUnit.pas' {EarchiveSendForm},
   EarchiceDurumSorgulaUnit in 'EarchiceDurumSorgulaUnit.pas' {EarchiceDurumSorgula},
-  EarsivIndirUnit in 'EarsivIndirUnit.pas' {EarsivIndirForm};
+  EarsivIndirUnit in 'EarsivIndirUnit.pas' {EarsivIndirForm},
+  EarsivMailGonderUnit in 'EarsivMailGonderUnit.pas' {EarchiveSendEmailForm};
 
 {$R *.res}
 
@@ -33,14 +34,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(TIzibizDataModule, IzibizDataModule);
   Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TMukellefListesiCekForm, MukellefListesiCekForm);
-  Application.CreateForm(TCheckUserForm, CheckUserForm);
-  Application.CreateForm(TEfaturaSendForm, EfaturaSendForm);
-  Application.CreateForm(TEfaturaDurumSorgulama, EfaturaDurumSorgulama);
-  Application.CreateForm(TEfaturaIndirForm, EfaturaIndirForm);
-  Application.CreateForm(TEarchiveCancelInvoice, EarchiveCancelInvoice);
-  Application.CreateForm(TEarchiveSendForm, EarchiveSendForm);
-  Application.CreateForm(TEarchiceDurumSorgula, EarchiceDurumSorgula);
-  Application.CreateForm(TEarsivIndirForm, EarsivIndirForm);
   Application.Run;
 end.

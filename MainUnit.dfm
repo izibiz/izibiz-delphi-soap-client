@@ -51,7 +51,7 @@ object MainForm: TMainForm
         OnClick = menuDurumSorgulaClick
       end
       object menuEfaturaIndir: TMenuItem
-        Caption = #304'ndir'
+        Caption = #304'ndir(XML,TML,PDF)'
         OnClick = menuEfaturaIndirClick
       end
       object menuYanitVer: TMenuItem
@@ -80,6 +80,10 @@ object MainForm: TMainForm
       object menuEarsivIptal: TMenuItem
         Caption = #304'ptal Et'
         OnClick = menuEarsivIptalClick
+      end
+      object menuEarsivEmailGonder: TMenuItem
+        Caption = 'E-Posta G'#246'nder'
+        OnClick = menuEarsivEmailGonderClick
       end
     end
     object Ersaliye1: TMenuItem

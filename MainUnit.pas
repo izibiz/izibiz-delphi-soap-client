@@ -6,7 +6,7 @@ uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs,IzibizDataControl,LoginUnit,efaturaIndirunit,ShellAPI,EFaturaArchive,
    Vcl.Menus,MukellefListesiCekUnit,CheckUserUnit,EfaturaSendUnit,efaturaDurumSorgulamaUnit,System.IOUtils,
-  Vcl.ExtCtrls,EfaturaYanitVerUnit,EarchiveCancelInvoiceUnit,earchivesendunit,EarchiceDurumSorgulaUnit,earsivindirunit;
+  Vcl.ExtCtrls,earsivmailgonderunit,EfaturaYanitVerUnit,EarchiveCancelInvoiceUnit,earchivesendunit,EarchiceDurumSorgulaUnit,earsivindirunit;
 
 type
   TMainForm = class(TForm)
@@ -42,6 +42,7 @@ type
     Hakknda1: TMenuItem;
     menuDetail: TMenuItem;
     menuYanitVer: TMenuItem;
+    menuEarsivEmailGonder: TMenuItem;
     procedure FormCreate(Sender: TObject);
     procedure MenuAthGetGibUserListClick(Sender: TObject);
     procedure menuAuthCheckUserClick(Sender: TObject);
@@ -57,6 +58,7 @@ type
     procedure menuEarsivDurumSorgulaClick(Sender: TObject);
     procedure menuEarsivIndirClick(Sender: TObject);
     procedure menuYanitVerClick(Sender: TObject);
+    procedure menuEarsivEmailGonderClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -118,6 +120,12 @@ procedure TMainForm.menuEarsivDurumSorgulaClick(Sender: TObject);
 begin
   Application.CreateForm(TEarchiceDurumSorgula,EarchiceDurumSorgula);
   EarchiceDurumSorgula.ShowModal;
+end;
+
+procedure TMainForm.menuEarsivEmailGonderClick(Sender: TObject);
+begin
+  Application.CreateForm(TEarchiveSendEmailForm,EarchiveSendEmailForm);
+  EarchiveSendEmailForm.ShowModal;
 end;
 
 procedure TMainForm.menuEarsivGonderClick(Sender: TObject);
