@@ -25,6 +25,6 @@ Delphi Client Örnek projesi
   - ReadFromArchive
   - GetEArchiveStatus
   - CancelEArchiveInvoice
-  - _GetEmailEarchiveInvoice(eklenecek)_
+  - GetEmailEarchiveInvoice
   - _GetEArchiveReport(eklenecek)_
   - _ReadEArchiveReport(eklenecek)_
