@@ -14,7 +14,17 @@ type
     dpEnd: TDateTimePicker;
     Label2: TLabel;
     memo: TMemo;
+    edId: TEdit;
+    Label3: TLabel;
+    edUUID: TEdit;
+    Label4: TLabel;
+    cbTip: TComboBox;
+    Label5: TLabel;
+    cbYon: TComboBox;
+    Label6: TLabel;
+    btnIndirWityType: TButton;
     procedure btnIndirClick(Sender: TObject);
+    procedure btnIndirWityTypeClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -53,6 +63,26 @@ begin
       mark[0] := inv;
       memo.Lines.Add(inv.ID+' okundu olarak işaretleniyor...');
       IzibizDataModule.einvoiceWs.markInvoice(IzibizDataModule.getSessionId,mark);
+    end;
+  memo.Lines.Add('işlem tamamlandı');
+end;
+
+procedure TEfaturaIndirForm.btnIndirWityTypeClick(Sender: TObject);
+var
+  resp : GetInvoiceWithTypeResponse;
+  inv : INVOICE;
+  folder,fileName : string;
+  content:TArray<Byte>;
+begin
+  folder := 'efatura/downloads/';
+  resp := IzibizDataModule.einvoiceWs.GetInvoiceWithType(IzibizDataModule.getSessionId,edId.Text,edUUID.Text,cbYon.Items[cbYon.ItemIndex],cbTip.Items[cbTip.ItemIndex]);
+  for inv in resp.INVOICE do
+    begin
+      fileName := inv.ID+' - '+inv.UUID+'.'+cbTip.Items[cbTip.ItemIndex]+'.zip';
+      memo.Lines.Add(folder+fileName +' kaydediliyor...');
+      content := Base64UtilType.Create.base64ToByteArray(inv.CONTENT.Text);
+      TFile.WriteAllBytes(folder+fileName,content);
+      memo.Lines.Add(folder+fileName +' kaydedildi...');
     end;
   memo.Lines.Add('işlem tamamlandı');
 end;

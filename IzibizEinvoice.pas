@@ -28,6 +28,7 @@ uses
     function getInvoice(sessionId:string;startDate,endDate:TDate):GetInvoiceResponse;
     function markInvoice(sessionId:string;invoices:Array_Of_INVOICE):MarkInvoiceResponse;
     function SendInvoiceResponseWithServerSign(sessionId,status:string;invoices:Array_Of_INVOICE;description:Array_Of_string):SendInvoiceResponseWithServerSignResponse;
+    function GetInvoiceWithType(sessionId,faturaNo,uuid,yon,tip:string):GetInvoiceWithTypeResponse;
   end;
 
 implementation
@@ -284,5 +285,25 @@ begin
   if resp.ERROR_TYPE<>nil then
     raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
     result := resp;
+end;
+
+function IzizibEinvoiceClient.GetInvoiceWithType(sessionId,faturaNo,uuid,yon,tip:string):GetInvoiceWithTypeResponse;
+var
+req : GetInvoiceWithTypeRequest;
+resp : GetInvoiceWithTypeResponse;
+begin
+  req := GetInvoiceWithTypeRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  req.INVOICE_SEARCH_KEY := INVOICE_SEARCH_KEY.Create;
+  req.INVOICE_SEARCH_KEY.ID := faturaNo;
+  req.INVOICE_SEARCH_KEY.UUID := uuid;
+  req.INVOICE_SEARCH_KEY.TYPE_ := tip;
+  req.INVOICE_SEARCH_KEY.DIRECTION := yon;
+  req.INVOICE_SEARCH_KEY.READ_INCLUDED := True;
+  resp := eiWs.GetInvoiceWithType(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+  result := resp;
 end;
 end.

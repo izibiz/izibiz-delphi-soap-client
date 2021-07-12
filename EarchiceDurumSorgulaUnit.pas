@@ -33,7 +33,6 @@ var
 resp:GetEArchiveInvoiceStatusResponse;
 inv:EARCHIVE_INVOICE;
 uuids:Array_Of_string;
-uuid:string;
 index:integer;
 begin
   SetLength(uuids,memoUUID.Lines.Count);
