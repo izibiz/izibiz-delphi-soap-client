@@ -19,11 +19,18 @@ uses
     Constructor Create; overload;
     procedure beforeExecute(const MethodName: string; SOAPRequest: TStream);
     procedure afterExecute(const MethodName: string; SOAPRequest: TStream);
+    //e-irsaliye methodları
     function loadDespatchAdvice(sessionId,xmlPath:string):LoadDespatchAdviceResponse;
     function sendDespatchAdvice(sessionId,xmlPath,seri,xsltName:string):SendDespatchAdviceResponse;
     function getDespatchAdvice(sessionId:string;startDate,endDate:TDate;contentType:CONTENT_TYPE):GetDespatchAdviceResponse;
     function markDespatchAdvice(sessionId,id,uuid:string):MarkDespatchAdviceResponse;
     function getDespatchAdviceStatus(sessionId:string;uuidList:array of string):GetDespatchAdviceStatusResponse;
+    //e-irsaliye yanıt methodları
+    function loadReceiptAdvice(sessionId,xmlPath:string):LoadReceiptAdviceResponse;
+    function sendReceiptAdvice(sessionId,xmlPath,seri,xsltName:string):SendReceiptAdviceResponse;
+    function getReceiptAdvice(sessionId:string;startDate,endDate:TDate;contentType:CONTENT_TYPE):GetReceiptAdviceResponse;
+    function markReceiptAdvice(sessionId,id,uuid:string):MarkReceiptAdviceResponse;
+    function getReceiptAdviceStatus(sessionId:string;uuidList:array of string):GetReceiptAdviceStatusResponse;
   end;
 
 implementation
@@ -145,7 +152,7 @@ begin
   req.SEARCH_KEY.START_DATE.AsDate := startDate;
   req.SEARCH_KEY.END_DATE := TXSDate.Create;
   req.SEARCH_KEY.END_DATE.AsDate := endDate;
-  req.SEARCH_KEY.READ_INCLUDED := false;//mark_receiptAdvice ile alındı işaretlenen belgelerin tekrar gelmemesi için false yapılır.
+  req.SEARCH_KEY.READ_INCLUDED := false;//mark_despatchAdvice ile alındı işaretlenen belgelerin tekrar gelmemesi için false yapılır.
   req.SEARCH_KEY.DIRECTION := 'IN';//IN,OUT değerlerini alır.IN gelen,OUT giden irsaliyelerdir
   req.HEADER_ONLY :='N';//belge içeriği(xml) alınmak istenmiyorsa Y kullanılmalıdır
   resp := eirsaliyeWs.GetDespatchAdvice(req);
@@ -197,6 +204,136 @@ begin
   end;
   req.UUID := tokens;
   resp := eirsaliyeWs.GetDespatchAdviceStatus(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+  result := resp;
+end;
+
+//e-lrsaliye yanıt methodları
+
+function izibizEirsaliyeClient.loadReceiptAdvice(sessionId,xmlPath:string):LoadReceiptAdviceResponse;
+var
+req : LoadReceiptAdviceRequest;
+resp : LoadReceiptAdviceResponse;
+receipts : Array_Of_RECEIPTADVICE;
+base64Bin: base64Binary;
+begin
+  req := LoadReceiptAdviceRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  req.REQUEST_HEADER.COMPRESSED := 'N';//xml belgeleri daha hızlı yüklemek için belgeleri zipleyip bu değeri Y yapabilirsiniz.
+  SetLength(receipts,1);
+  receipts[0] := RECEIPTADVICE.Create;
+  base64Bin := base64Binary.Create;
+  base64Bin.Text := Base64UtilType.Create.byteArrayToBase64(TEncoding.UTF8.GetBytes(TFile.ReadAllText(xmlPath,TEncoding.UTF8)));
+  receipts[0].CONTENT := base64Bin;
+  req.RECEIPTADVICE := receipts;
+  resp := eirsaliyeWs.LoadReceiptAdvice(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+  Result := resp;
+end;
+
+function izibizEirsaliyeClient.sendReceiptAdvice(sessionId,xmlPath,seri,xsltName:string):SendReceiptAdviceResponse;
+var
+req : SendReceiptAdviceRequest;
+resp : SendReceiptAdviceResponse;
+receipts : Array_Of_RECEIPTADVICE;
+base64Bin: base64Binary;
+begin
+  req := SendReceiptAdviceRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  req.REQUEST_HEADER.COMPRESSED := 'N';//xml belgeleri daha hızlı yüklemek için belgeleri zipleyip bu değeri Y yapabilirsiniz.
+  if length(seri)>0 then//numara atamasını servisin yapması için kullanılır
+  begin
+    req.ID_ASSIGN_FLAG := True;
+    req.ID_ASSIGN_PREFIX := seri;
+  end;
+  SetLength(receipts,1);
+  receipts[0] := RECEIPTADVICE.Create;
+  base64Bin := base64Binary.Create;
+  base64Bin.Text := Base64UtilType.Create.byteArrayToBase64(TEncoding.UTF8.GetBytes(TFile.ReadAllText(xmlPath,TEncoding.UTF8)));
+  receipts[0].CONTENT := base64Bin;
+  req.RECEIPTADVICE := receipts;
+  resp := eirsaliyeWs.SendReceiptAdvice(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+  Result := resp;
+end;
+
+function izibizEirsaliyeClient.getReceiptAdvice(sessionId:string;startDate,endDate:TDate;contentType:CONTENT_TYPE):GetReceiptAdviceResponse;
+var
+req:GetReceiptAdviceRequest;
+resp:GetReceiptAdviceResponse;
+begin
+  req := GetReceiptAdviceRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  req.SEARCH_KEY.CONTENT_TYPE := contentType;
+  req.REQUEST_HEADER.COMPRESSED := 'Y';//belgeler zipsiz xml olarak indirilmek isteniyorsa N kullanılmalıdır
+  req.SEARCH_KEY := SEARCH_KEY2.Create;
+  //req.SEARCH_KEY.LIMIT :=100;
+  //req.SEARCH_KEY.ID :='ABC2021000000001';
+  //req.SEARCH_KEY.UUID := '61C8D1CB-50A1-AB2F-B1CB-AD2F71E2DC96';
+  //req.SEARCH_KEY.SENDER :='urn:mail:defaultgb@izibiz.com.tr';
+  //req.SEARCH_KEY.RECEIVER := 'urn:mail:defaultpk@izibiz.com.tr';
+  req.SEARCH_KEY.START_DATE := TXSDate.Create;
+  req.SEARCH_KEY.START_DATE.AsDate := startDate;
+  req.SEARCH_KEY.END_DATE := TXSDate.Create;
+  req.SEARCH_KEY.END_DATE.AsDate := endDate;
+  req.SEARCH_KEY.READ_INCLUDED := false;//mark_receiptAdvice ile alındı işaretlenen belgelerin tekrar gelmemesi için false yapılır.
+  req.SEARCH_KEY.DIRECTION := 'IN';//IN,OUT değerlerini alır.IN gelen,OUT giden irsaliyelerdir
+  req.HEADER_ONLY :='N';//belge içeriği(xml) alınmak istenmiyorsa Y kullanılmalıdır
+  resp := eirsaliyeWs.GetReceiptAdvice(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+  result := resp;
+end;
+
+//örnek için tekli kullanım verilmiştir.
+//istek array kabul ettiği için tek seferde birden fazla irsaliyeyi alındı olarak işaretleyebilirsiniz
+function izibizEirsaliyeClient.markReceiptAdvice(sessionId,id,uuid:string):MarkReceiptAdviceResponse;
+var
+req : MarkReceiptAdviceRequest;
+resp : MarkReceiptAdviceResponse;
+receipts:Array_Of_RECEIPTADVICEINFO;
+begin
+  req := MarkReceiptAdviceRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  req.MARK := MARK.Create;
+  SetLength(receipts,1);
+  receipts[0] := RECEIPTADVICEINFO.Create;
+  receipts[0].ID := id;
+  receipts[0].UUID := uuid;
+  req.MARK.RECEIPTADVICEINFO := receipts;
+  resp := eirsaliyeWs.MarkReceiptAdvice(req);
+  if resp.ERROR_TYPE<>nil then
+    raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
+  result := resp;
+end;
+
+function izibizEirsaliyeClient.getReceiptAdviceStatus(sessionId:string;uuidList:array of string):GetReceiptAdviceStatusResponse;
+var
+req : GetReceiptAdviceStatusRequest;
+resp : GetReceiptAdviceStatusResponse;
+tokens : Array_Of_token;
+index : integer;
+uuid:string;
+begin
+  req := GetReceiptAdviceStatusRequest.Create;
+  req.REQUEST_HEADER := REQUEST_HEADERType.Create;
+  req.REQUEST_HEADER.SESSION_ID := sessionId;
+  SetLength(tokens,length(uuidList));
+  index :=0;
+  for uuid in uuidList do
+  begin
+    tokens[index] := uuid;
+    index := index+1;
+  end;
+  req.UUID := tokens;
+  resp := eirsaliyeWs.GetReceiptAdviceStatus(req);
   if resp.ERROR_TYPE<>nil then
     raise Exception.Create(resp.ERROR_TYPE.ERROR_SHORT_DES);
   result := resp;
