@@ -2,12 +2,12 @@
 Web servis methodları ile ilgili detaylı bilgi için [İZİBİZ E-Dönüşüm Entegrasyon Kılavuzu](https://dev.izibiz.com.tr/)nu inceleyiniz.
 
 Delphi Client Örnek projesi
-- Kimlik Doğrulama Webservisi (IzibizAuth.pas)
+- Kimlik Doğrulama Web Servisi (IzibizAuth.pas)
   - Login
   - Logout
   - GetGibUserList
   - CheckUser
-- E-Fatura Webservisi (IzibizEinvoice.pas)
+- E-Fatura Web Servisi (IzibizEinvoice.pas)
   - SendInvoice
     - Seri No Servisten Atayarak Gönderim
     - Seri No atanmış Gönderim
@@ -19,7 +19,7 @@ Delphi Client Örnek projesi
   - GetInvoiceStatusAll
   - GetInvoiceWithType
   - SendInvoiceResponseWithServerSign
-- E-Arşiv Fatura Webservisi (IzibizEarchiveInvoice.pas)
+- E-Arşiv Fatura Web Servisi (IzibizEarchiveInvoice.pas)
   - WriteToArchieveExtended(taslak yükleme)
   - WriteToArchieveExtended(gönderme)
   - ReadFromArchive
@@ -28,3 +28,9 @@ Delphi Client Örnek projesi
   - GetEmailEarchiveInvoice
   - _GetEArchiveReport(eklenecek)_
   - _ReadEArchiveReport(eklenecek)_
+- E-İrsaliye Web Servisi(IzibizEIrsaliye.pas)
+  - LoadDespatchAdvice
+  - SendDespatchAdvice
+  - GetDespatchAdvice
+  - GetDespatchAdviceStatus
+  - MarkDespatchAdvice
