@@ -59,6 +59,7 @@ type
     procedure menuEarsivIndirClick(Sender: TObject);
     procedure menuYanitVerClick(Sender: TObject);
     procedure menuEarsivEmailGonderClick(Sender: TObject);
+    procedure Ykle1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -197,6 +198,22 @@ procedure TMainForm.menuYanitVerClick(Sender: TObject);
 begin
   Application.CreateForm(TEfaturaYanitVerForm,EfaturaYanitVerForm);
   EfaturaYanitVerForm.ShowModal;
+end;
+
+procedure TMainForm.Ykle1Click(Sender: TObject);
+var
+xmlData,fileName,xmlPath:string;
+begin
+  if (not TDirectory.Exists('eirsaliye/taslak',true)) then
+    TDirectory.CreateDirectory('eirsaliye/taslak');
+  fileName := 'DMY'+FormatDateTime('yyyymmddhhnnss',now);
+  xmlData := TFile.ReadAllText('eirsaliye/load.xml',TEncoding.UTF8);
+  xmlData := StringReplace(xmlData,'##ID##',fileName,[rfReplaceAll]);
+  xmlData := StringReplace(xmlData,'##UUID##',IzibizDataModule.getRandomUUID,[rfReplaceAll]);
+  xmlPath := 'eirsaliye/taslak/'+fileName+'.xml';
+  TFile.WriteAllText(xmlPath,xmlData,TEncoding.UTF8);
+  IzibizDataModule.eirsaliyeWs.loadDespatchAdvice(IzibizDataModule.getSessionId,xmlPath);
+  ShowMessage('e-irsaliye '+fileName+' numara ile taslaklara yüklendi');
 end;
 
 end.

@@ -25,7 +25,9 @@ uses
   EarchiveSendUnit in 'EarchiveSendUnit.pas' {EarchiveSendForm},
   EarchiceDurumSorgulaUnit in 'EarchiceDurumSorgulaUnit.pas' {EarchiceDurumSorgula},
   EarsivIndirUnit in 'EarsivIndirUnit.pas' {EarsivIndirForm},
-  EarsivMailGonderUnit in 'EarsivMailGonderUnit.pas' {EarchiveSendEmailForm};
+  EarsivMailGonderUnit in 'EarsivMailGonderUnit.pas' {EarchiveSendEmailForm},
+  EIrsaliye in 'EIrsaliye.pas',
+  IzibizEIrsaliye in 'IzibizEIrsaliye.pas';
 
 {$R *.res}
 

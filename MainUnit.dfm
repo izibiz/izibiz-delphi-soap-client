@@ -90,6 +90,7 @@ object MainForm: TMainForm
       Caption = 'E-'#304'rsaliye'
       object Ykle1: TMenuItem
         Caption = 'Y'#252'kle'
+        OnClick = Ykle1Click
       end
       object Gdner1: TMenuItem
         Caption = 'G'#246'nder'
