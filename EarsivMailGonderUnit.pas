@@ -29,10 +29,8 @@ implementation
 {$R *.dfm}
 
 procedure TEarchiveSendEmailForm.btnGonderClick(Sender: TObject);
-var
-resp: GetEmailEarchiveInvoiceResponse;
 begin
-  resp := IzibizDataModule.earchiveWs.GetEmailEarchiveInvoice(IzibizDataModule.getSessionId,edUUID.Text,edEmail.Text);
+  IzibizDataModule.earchiveWs.GetEmailEarchiveInvoice(IzibizDataModule.getSessionId,edUUID.Text,edEmail.Text);
   ShowMessage('İşlem tamamlandı');
 end;
 

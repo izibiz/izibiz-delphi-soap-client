@@ -48,6 +48,7 @@ begin
   authWs:= IzizibAuthClient.Create;
   einvoiceWs := IzizibEinvoiceClient.Create;
   earchiveWs := IzizibEarchiveEinvoiceClient.Create;
+  eirsaliyeWs := izibizEirsaliyeClient.Create;
 end;
 
 
