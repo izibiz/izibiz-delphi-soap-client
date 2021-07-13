@@ -4,7 +4,7 @@ interface
 
 uses
   System.SysUtils, System.Classes,System.NetEncoding,Soap.InvokeRegistry,
-  IzibizAuth,izibizEinvoice,izibizEarchiveInvoice;
+  IzibizAuth,izibizEinvoice,izibizEarchiveInvoice,izibizeirsaliye;
 
 type
   TIzibizDataModule = class(TDataModule)
@@ -15,6 +15,7 @@ type
    authWs:IzizibAuthClient;
    einvoiceWs: IzizibEinvoiceClient;
    earchiveWs: IzizibEarchiveEinvoiceClient;
+   eirsaliyeWs: izibizEirsaliyeClient;
    function getSessionId():string;
    function getRandomUUID():string;
   end;
