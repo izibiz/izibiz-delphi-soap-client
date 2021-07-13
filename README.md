@@ -34,3 +34,8 @@ Delphi Client Örnek projesi
   - GetDespatchAdvice
   - GetDespatchAdviceStatus
   - MarkDespatchAdvice
+  - LoadReceiptAdvice
+  - SendReceiptAdvice
+  - GetReceiptAdvice
+  - GetReceiptAdviceStatus
+  - MarkReceiptAdvice
